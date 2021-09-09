@@ -1,0 +1,208 @@
+---
+title: "GC-MS treatment"
+output: html_notebook
+---
+
+
+---
+title: "Fraction CHCL3 (ver2)"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+#################
+###   CHCL3   ###
+#################
+
+```{r}
+setwd("/Users/guill/OneDrive/Documents/Stage M2/GC-MS/")
+```
+
+
+```{r}
+library(erah)
+help(package='erah')
+library(quantreg)
+library(mzR)
+```
+
+
+```{r}
+createdt("/Users/guill/Desktop/CHCL3 fraction/")
+```
+
+```{r}
+CHCL3<-newExp(instrumental = "/Users/guill/Desktop/CHCL3 fraction (avec bactch X)/CHCL3 fraction (avec bactch X)_inst.csv", phenotype = "/Users/guill/Desktop/CHCL3 fraction (avec bactch X)/CHCL3 fraction (avec bactch X)_pheno.csv", info = "Fraction CHCL3")
+metaData(CHCL3)
+```
+
+```{r}
+phenoData(CHCL3)
+```
+
+```{r}
+expClasses(CHCL3)
+```
+
+#Déconvolution
+```{r}
+ex.dec.par<-setDecPar(min.peak.width = 2.5,min.peak.height = 2500,noise.threshold = 500,avoid.processing.mz = c(73,149,207))
+CHCL3<-deconvolveComp(CHCL3,ex.dec.par)
+```
+
+#Save
+```{r}
+save(CHCL3, file = "FractCHCL3.rda")
+```
+#Load 
+```{r}
+load("FractCHCL3.rda")
+```
+
+
+#Alignement
+```{r}
+ex.al.par<-setAlPar(min.spectra.cor = 0.80,max.time.dist = 5,mz.range = 70:600)
+CHCL3<-alignComp(CHCL3,alParameters = ex.al.par)
+```
+
+#Missing compound recovery
+
+CHCL3<-recMissComp(CHCL3,min.samples = 6)
+
+
+#Identification
+```{r}
+CHCL3<-identifyComp(CHCL3)
+```
+
+```{r}
+id.list<-idList(CHCL3)
+head(id.list)
+```
+
+#Results
+
+```{r}
+alignList(CHCL3,by.area = TRUE)
+```
+
+
+```{r}
+idList(CHCL3)
+```
+
+```{r}
+dataList(CHCL3,by.area = TRUE)
+```
+
+
+
+################
+###   MEOH   ###
+
+
+```{r}
+setwd("/Users/guill/OneDrive/Documents/Stage M2/GC-MS/Results/MEOH/")
+```
+
+
+```{r}
+library(erah)
+help(package='erah')
+library(quantreg)
+library(mzR)
+```
+
+```{r}
+createdt("/Users/guill/Desktop/MeOH fraction (trie)")
+```
+
+```{r}
+MEOH<-newExp(instrumental = "/Users/guill/Desktop/MeOH fraction (trie)/MeOH fraction (trie)_inst.csv", phenotype = "/Users/guill/Desktop/MeOH fraction/MeOH fraction_pheno.csv", info = "Fraction MeOH")
+metaData(MEOH)
+```
+
+```{r}
+phenoData(MEOH)
+```
+
+```{r}
+expClasses(MEOH)
+```
+
+
+#Déconvolution
+```{r}
+ex.dec.par<-setDecPar(min.peak.width = 1.5,min.peak.height = 1500,noise.threshold = 500,avoid.processing.mz = c(73,149,207))
+MEOH<-deconvolveComp(MEOH,ex.dec.par)
+```
+#Save
+```{r}
+save(MEOH, file = "FractMeOh.rda")
+```
+#Load 
+```{r}
+load("FractMeOh.rda")
+```
+
+#Alignement
+```{r}
+ex.al.par<-setAlPar(min.spectra.cor = 0.90,max.time.dist = 3,mz.range = 40:600)
+MEOH<-alignComp(MEOH,alParameters = ex.al.par)
+```
+
+#Missing compound recovery
+
+
+MEOH<-recMissComp(MEOH,min.samples = 6, free.model = FALSE)
+```{r}
+MEOH<-recMissComp(MEOH,min.samples = 6)
+```
+
+
+
+#Identification
+```{r}
+MEOH<-identifyComp(MEOH)
+```
+
+```{r}
+id.list<-idList(MEOH)
+```
+
+```{r}
+head(id.list)
+```
+
+#Results
+
+
+```{r}
+alignList(MEOH,by.area = TRUE)
+```
+
+```{r}
+idList(MEOH)
+```
+
+```{r}
+dataList(MEOH)
+```
+
+
+
+
+```{r}
+write.csv(dataList(MEOH),file = "MEOH datalist (trie)")
+```
+
+
+
+
+
+
+
+
+
