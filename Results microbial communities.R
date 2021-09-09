@@ -18,7 +18,7 @@ library(cowplot)
 ###   Microbial communities   ###
 #################################
 
-#Choisir Dossier esp�ce 
+#Choisir Dossier espèce 
 setwd("/Users/guill/OneDrive/Documents/Stage M2/Sequencage/Core microbiome/")
 
 ### Bio Mol ###
@@ -70,7 +70,7 @@ dim(abondITS)
 abondITS=as.matrix(abondITS)
 OTU_ITS = otu_table(abondITS, taxa_are_rows = TRUE)
 
-# je ne sais pas pourquoi mais il a fallu réouvrir le ITS_taxa.csv sur libreoffice et le ré-enregistrer avec sep=";"
+# je ne sais pas pourquoi mais il a fallu rÃ©ouvrir le ITS_taxa.csv sur libreoffice et le rÃ©-enregistrer avec sep=";"
 taxITS <- read.csv2("./table-97_OTUs_mosaique_210710_ITS_taxa.csv", sep=";", header= F)
 dim(taxITS)
 as_tibble(taxITS)
@@ -100,7 +100,7 @@ dim(abond18S)
 abond18S=as.matrix(abond18S)
 OTU_18S = otu_table(abond18S, taxa_are_rows = TRUE)
 
-# je ne sais pas pourquoi mais il a fallu réouvrir le ITS_taxa.csv sur libreoffice et le ré-enregistrer avec sep=";"
+# je ne sais pas pourquoi mais il a fallu rÃ©ouvrir le ITS_taxa.csv sur libreoffice et le rÃ©-enregistrer avec sep=";"
 tax18S <- read.csv2("./table-97_OTUs_mosaique_210710_18S_taxa.csv", sep=";", header= F)
 dim(tax18S)
 as_tibble(tax18S)
@@ -146,7 +146,7 @@ ordplot +
 #dev.off()
 
 # via ampvis2
-# d'abord enlever les échantillons qui n'ont pas d'otus
+# d'abord enlever les Ã©chantillons qui n'ont pas d'otus
 mosaique_16S_seul <- prune_samples(sample_sums(mosaique_16S_final)>0, mosaique_16S_final)
 d_16S <- amp_load(otutable = otu_table(mosaique_16S_seul), taxonomy = tax_table(mosaique_16S_seul), 
                   metadata = samples_mosaique)
@@ -237,7 +237,7 @@ mosaique_16S = phyloseq(OTU_16S, TAX_16S, sampledata)
 #                  rngseed = FALSE, replace = TRUE, trimOTUs = TRUE, verbose = TRUE)
 
 mosaique_16S_rel <- microbiome::transform(mosaique_16S, "compositional") # passe en abondances relatives
-# filtre qualité p/p 16S mock community 1%
+# filtre qualitÃ© p/p 16S mock community 1%
 mosaique_16S_rel <- core(mosaique_16S_rel, detection = 0.01, prevalence = 0) # seuil ab rel = 1%
 mosaique_16S_rel
 
@@ -253,7 +253,7 @@ dim(abondITS)
 abondITS=as.matrix(abondITS)
 OTU_ITS = otu_table(abondITS, taxa_are_rows = TRUE)
 
-# je ne sais pas pourquoi mais il a fallu réouvrir le ITS_taxa.csv sur libreoffice et le ré-enregistrer avec sep=";"
+# je ne sais pas pourquoi mais il a fallu rÃ©ouvrir le ITS_taxa.csv sur libreoffice et le rÃ©-enregistrer avec sep=";"
 taxITS <- read.csv2("./table-97_OTUs_mosaique_210710_ITS_taxa.csv", sep=";", header= F)
 dim(taxITS)
 as_tibble(taxITS)
@@ -447,7 +447,7 @@ plot_tree(mosaique_Core_tree, nodelabf=nodeplotblank, label.tips="Order", ladder
 ### Boxplot ###
 ###############
 
-#Abondance relative par �chantillons
+#Abondance relative par échantillons
 otu_table_core<-otu_table(mosaique_16S_ITS_core_tout_absolue_rel)
 otu_table_core<-as.data.frame(otu_table_core)
 otu_table_core<-t(otu_table_core)
